@@ -57,7 +57,7 @@ class particle:
         # generate the x0 and direction of the particle
         self.generate()
 
-    def print(self):
+    def Print(self):
         """
         Print particle
         :return:
