@@ -493,7 +493,6 @@ class particle:
             # We turn off the PE-effect if it isn't the last scatter of the particle.
             # This is done to always get n_max scatters per event.
             #
-            print('PE uit')
             process = 'inc'
             self.weight = self.weight * frac
 
