@@ -19,6 +19,7 @@ class particle:
             nscatter_max = maximum number of scatters (only when vrt<>None)
             edep_max = maximum energy deposit in the xenon (keV)
             debug = show debug printout information [Default = False]
+            seed = random seed:["seed",None ]
         """
         # # # print("particle::initialize")
 
@@ -28,6 +29,7 @@ class particle:
         self.cryostat = kwargs.pop('geometry',None)
         self.fiducial = kwargs.pop('fiducial',None)
         self.debug = kwargs.pop('debug',False)
+        self.seed=kwargs.pop('seed ',None)
 
         #
         # vrt = variance reduction technique
@@ -43,6 +45,9 @@ class particle:
         # Particle weight. Will be reduced when using VRT methods
         #
         self.weight = 1.0
+
+        #set random seed
+        np.random.seed(self.seed)
 
         if self.debug == True:
             print('particle::propagate VRT:',self.vrt)
