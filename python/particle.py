@@ -378,7 +378,7 @@ class particle:
             #
             # Compton scatter
             #
-            theta_s, phi_s, w_s = self.phys.do_compton(self.energy, self.edep_max)
+            theta_s, phi_s, w_s = self.phys.do_compton(self.energy, self.edep_max,self.seed)
             self.update_particle('inc',s,theta_s, phi_s, w_s)
 
             # calculate teh energy deposit in the xenon

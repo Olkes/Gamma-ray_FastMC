@@ -236,7 +236,7 @@ class em_physics:
         """
         return np.interp(x,self.x,self.Sx)
 
-    def do_compton(self, energy, de_max):
+    def do_compton(self, energy, de_max,seed):
         """
         Select the Compton scattering angle based on the Klein-Nishina differential cross section
 
@@ -253,7 +253,7 @@ class em_physics:
         weight = 1.0
 
         #set random seed
-        np.random.seed(42)
+        np.random.seed(seed)
             
         #
         # make the cdf from the differential cross section
