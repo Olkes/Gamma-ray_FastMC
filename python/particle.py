@@ -88,7 +88,7 @@ class particle:
         #
         # generate x0 of the particle to be at a random location on the cylinder
         #
-        self.x0 = self.cryostat.generate_point()['x']
+        self.x0 = self.cryostat.generate_point(rs=self.seed)['x']
         self.x0start = self.x0
 
         #
