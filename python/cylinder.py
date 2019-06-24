@@ -13,14 +13,13 @@ class cylinder:
         """
         self.radius = kwargs.pop('R',-1.0)
         self.height = kwargs.pop('h',-1.0)
-        self.seed = kwargs.pop('s',42)
 
         if (self.radius == -1) | (self.height == -1):
             print("cylinder::__init__ ERROR. Bad radius and/or height of cylinder")
-            print("cylinder::__init__    r = ",self.radius," h = ",self.height,"and seed is:",self.seed)
+            print("cylinder::__init__    r = ",self.radius," h = ",self.height)
             return
         else:
-            print("cylinder::__init__ Define cylinder with R=",self.radius," and height=",self.height,"and seed is:",self.seed)
+            print("cylinder::__init__ Define cylinder with R=",self.radius," and height=",self.height)
 
         #.
         # Calculate the area of teh cylinder side, top and bottom
@@ -36,21 +35,23 @@ class cylinder:
         self.f_top = area_top / area_tot
         self.f_bot = area_bot / area_tot
 
-        #set random seed
-        np.random.seed(self.seed)
 
         return
 
 
-    def generate_point(self):
+    def generate_point(self,**kwargs):
         """
         Generate a point at a random location on the cylinder
 
+        :param kwargs:
+            rs = random seed
+
         :return:
         """
+        rs = kwargs.pop('seed', None)
 
         # set random seed
-        np.random.seed(self.seed)
+        np.random.seed(rs)
 
         xyz = np.zeros(3)
         # decide on which cylinder surface to generate a hit
