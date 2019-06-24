@@ -34,6 +34,9 @@ class cylinder:
         self.f_top = area_top / area_tot
         self.f_bot = area_bot / area_tot
 
+        #set random seed
+        np.random.seed(42)
+
         return
 
 

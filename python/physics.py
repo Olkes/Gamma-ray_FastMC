@@ -25,6 +25,9 @@ class em_physics:
 
         self.Z_xenon = 54
 
+        #set random seed
+        np.random.seed(42)
+
         return
 
 
