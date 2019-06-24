@@ -44,10 +44,10 @@ class cylinder:
 
         :param kwargs:
             rs = random seed
-
         :return:
         """
-        rs = kwargs.pop('seed', None)
+        #rs = kwargs.pop('seed', None)
+        rs=42
 
         # set random seed
         np.random.seed(rs)
