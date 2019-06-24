@@ -25,8 +25,7 @@ class em_physics:
 
         self.Z_xenon = 54
 
-        #set random seed
-        np.random.seed(42)
+
 
         return
 
@@ -253,7 +252,8 @@ class em_physics:
         rmin = 0.
         weight = 1.0
 
-
+        #set random seed
+        np.random.seed(42)
             
         #
         # make the cdf from the differential cross section
