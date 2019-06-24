@@ -7,15 +7,17 @@ class cylinder:
         Initialize a cylinder
 
         :param kwargs: R = radius,
-                       h = height
+                       h = height,
+                       s = seed
 
         """
         self.radius = kwargs.pop('R',-1.0)
         self.height = kwargs.pop('h',-1.0)
+        self.seed = kwargs.pop('s',42)
 
         if (self.radius == -1) | (self.height == -1):
             print("cylinder::__init__ ERROR. Bad radius and/or height of cylinder")
-            print("cylinder::__init__    r = ",self.radius," h = ",self.height)
+            print("cylinder::__init__    r = ",self.radius," h = ",self.height,"and seed is:",self.seed)
             return
         else:
             print("cylinder::__init__ Define cylinder with R=",self.radius," and height=",self.height)
@@ -35,7 +37,7 @@ class cylinder:
         self.f_bot = area_bot / area_tot
 
         #set random seed
-        np.random.seed(42)
+        np.random.seed(self.seed)
 
         return
 
@@ -48,7 +50,7 @@ class cylinder:
         """
 
         # set random seed
-        np.random.seed(42)
+        np.random.seed(self.seed)
 
         xyz = np.zeros(3)
         # decide on which cylinder surface to generate a hit
