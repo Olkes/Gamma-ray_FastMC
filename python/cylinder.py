@@ -20,7 +20,7 @@ class cylinder:
             print("cylinder::__init__    r = ",self.radius," h = ",self.height,"and seed is:",self.seed)
             return
         else:
-            print("cylinder::__init__ Define cylinder with R=",self.radius," and height=",self.height)
+            print("cylinder::__init__ Define cylinder with R=",self.radius," and height=",self.height,"and seed is:",self.seed)
 
         #.
         # Calculate the area of teh cylinder side, top and bottom
