@@ -46,6 +46,10 @@ class cylinder:
 
         :return:
         """
+
+        # set random seed
+        np.random.seed(42)
+
         xyz = np.zeros(3)
         # decide on which cylinder surface to generate a hit
         r = np.random.uniform(0.0,1.0)
