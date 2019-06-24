@@ -29,7 +29,7 @@ class particle:
         self.cryostat = kwargs.pop('geometry',None)
         self.fiducial = kwargs.pop('fiducial',None)
         self.debug = kwargs.pop('debug',False)
-        self.seed=kwargs.pop('seed ',None)
+        self.seed = kwargs.pop('seed ',None)
 
         #
         # vrt = variance reduction technique
@@ -88,7 +88,7 @@ class particle:
         #
         # generate x0 of the particle to be at a random location on the cylinder
         #
-        self.x0 = self.cryostat.generate_point(rs=42)['x']
+        self.x0 = self.cryostat.generate_point(rs=self.seed)['x']
         self.x0start = self.x0
 
         #
