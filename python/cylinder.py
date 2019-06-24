@@ -43,11 +43,10 @@ class cylinder:
         Generate a point at a random location on the cylinder
 
         :param kwargs:
-            rs = random seed
+            seed = random seed
         :return:
         """
-        #rs = kwargs.pop('seed', None)
-        rs=42
+        rs = kwargs.pop('seed', None)
 
         # set random seed
         np.random.seed(rs)
