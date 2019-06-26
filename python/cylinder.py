@@ -38,7 +38,7 @@ class cylinder:
         return
 
 
-    def generate_point(self,**kwargs):
+    def generate_point(self,seed,**kwargs):
         """
         Generate a point at a random location on the cylinder
 
@@ -46,11 +46,11 @@ class cylinder:
             rs = random seed
         :return:
         """
-        rs = kwargs.pop('rs', None)
-        #rs=42
+
+
 
         # set random seed
-        np.random.seed(rs)
+        np.random.seed(seed)
 
         xyz = np.zeros(3)
         # decide on which cylinder surface to generate a hit
