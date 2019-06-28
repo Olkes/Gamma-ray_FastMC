@@ -65,6 +65,7 @@ class cylinder:
 
         # generate a hit
         phi = np.random.uniform(0,2*np.pi)
+        print(phi)
         if surface == "cyl":
             # cylinder
             xyz[0] = self.radius*np.cos(phi)
