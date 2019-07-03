@@ -493,13 +493,13 @@ class particle:
             process = 'inc'
             self.weight = self.weight*frac
 
-        elif self.nscatter+1 < self.nscatter_max:
+        #elif self.nscatter+1 < self.nscatter_max:
             #
             # We turn off the PE-effect if it isn't the last scatter of the particle.
             # This is done to always get n_max scatters per event.
             #
-            process = 'inc'
-            self.weight = self.weight * frac
+            #process = 'inc'
+            #self.weight = self.weight * frac
 
         else:
             #
