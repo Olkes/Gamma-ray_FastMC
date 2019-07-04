@@ -484,7 +484,7 @@ class particle:
         sigma_inc = self.phys.get_sigma(process='inc',energy=E)
         frac = sigma_inc / sigma_total
 
-        if self.edep_max < self.energy:
+        if self.edep_max < self.energy or (self.nscatter+1) < self.nscatter_max:
             #
             # if the maximum allowed energy deposit is lower than the energy of the particle, we switch off
             # the photo-electric effect and we correct the particle weight:
@@ -493,13 +493,11 @@ class particle:
             process = 'inc'
             self.weight = self.weight*frac
 
-        #elif self.nscatter+1 < self.nscatter_max:
+
             #
             # We turn off the PE-effect if it isn't the last scatter of the particle.
             # This is done to always get n_max scatters per event.
             #
-            #process = 'inc'
-            #self.weight = self.weight * frac
 
         else:
             #
