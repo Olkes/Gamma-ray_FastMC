@@ -34,24 +34,17 @@ class cylinder:
         self.f_top = area_top / area_tot
         self.f_bot = area_bot / area_tot
 
-
         return
 
 
-    def generate_point(self,seed,**kwargs):
+    def generate_point(self,**kwargs):
         """
         Generate a point at a random location on the cylinder
 
         :param kwargs:
-            rs = random seed
+
         :return:
         """
-
-
-
-        # set random seed
-        np.random.seed(seed)
-
         xyz = np.zeros(3)
         # decide on which cylinder surface to generate a hit
         r = np.random.uniform(0.0,1.0)

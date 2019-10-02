@@ -7,7 +7,7 @@ class particle:
     #@jit()
 
     def __init__(self, **kwargs):
-        """
+        """"
         Initialize a particle
         :param kwargs:
             type = particle specimen (value = gamma, <others defined later>)
@@ -19,7 +19,6 @@ class particle:
             nscatter_max = maximum number of scatters (only when vrt<>None)
             edep_max = maximum energy deposit in the xenon (keV)
             debug = show debug printout information [Default = False]
-            seed = random seed
         """
         # # # print("particle::initialize")
 
@@ -29,7 +28,6 @@ class particle:
         self.cryostat = kwargs.pop('geometry',None)
         self.fiducial = kwargs.pop('fiducial',None)
         self.debug = kwargs.pop('debug',False)
-        self.seed = kwargs.pop('seed',None)
 
         #
         # vrt = variance reduction technique
@@ -46,9 +44,6 @@ class particle:
         #
         self.weight = 1.0
 
-        #set random seed
-        np.random.seed(self.seed)
-
         if self.debug == True:
             print('particle::propagate VRT:',self.vrt)
 
@@ -62,7 +57,7 @@ class particle:
         # generate the x0 and direction of the particle
         self.generate()
 
-    def Print(self):
+    def print(self):
         """
         Print particle
         :return:
@@ -88,7 +83,7 @@ class particle:
         #
         # generate x0 of the particle to be at a random location on the cylinder
         #
-        self.x0 = self.cryostat.generate_point(self.seed)['x']
+        self.x0 = self.cryostat.generate_point()['x']
         self.x0start = self.x0
 
         #
@@ -378,7 +373,7 @@ class particle:
             #
             # Compton scatter
             #
-            theta_s, phi_s, w_s = self.phys.do_compton(self.energy, self.edep_max,self.seed)
+            theta_s, phi_s, w_s = self.phys.do_compton(self.energy, self.edep_max)
             self.update_particle('inc',s,theta_s, phi_s, w_s)
 
             # calculate teh energy deposit in the xenon
@@ -484,7 +479,7 @@ class particle:
         sigma_inc = self.phys.get_sigma(process='inc',energy=E)
         frac = sigma_inc / sigma_total
 
-        if self.vrt == 'fiducial_scatter' and (self.edep_max < self.energy or (self.nscatter+1) < self.nscatter_max):
+        if self.edep_max < self.energy:
             #
             # if the maximum allowed energy deposit is lower than the energy of the particle, we switch off
             # the photo-electric effect and we correct the particle weight:
@@ -492,13 +487,6 @@ class particle:
             #
             process = 'inc'
             self.weight = self.weight*frac
-
-
-            #
-            # We turn off the PE-effect if it isn't the last scatter of the particle.
-            # This is done to always get n_max scatters per event.
-            #
-
         else:
             #
             # choose incoherent or photo-electric effect based on their relative cross sections
