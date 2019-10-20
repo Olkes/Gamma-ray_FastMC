@@ -2,18 +2,29 @@ import pandas as pd
 import os,sys
 
 def write_script(settings):
-
-    ## OLKES SET THIS CORRECTLY
-    run_dir = "/user/olkes/FastMC/run"
-    run_dir = "."
-
     ## OLKES SET THIS CORRECTLY
     environment_setup = ". ~/nb_venv/bin/activate"
+
+    ## OLKES SET THIS CORRECTLY
+    run_dir = "your deirectory where you run the scipts"
+    run_dir = "/user/z37/Gamma-ray_FastMC/runit/"
+
+    #
+    # this is the directory where your scripts will live
+    #
+    script_dir = run_dir +'/scripts/'
+    #
+    # if the scripts directory does not exist.... make it
+    #
+    if not os.path.exists(script_dir):
+        cmd = 'mkdir '+script_dir
+        os.system(cmd)
+
 
     #
     # generate a shell script
     #
-    scriptfile = run_dir+"/scripts/job"+str(settings['job_id'])+".sh"
+    scriptfile = script_dir+'/job'+str(settings['job_id'])+".sh"
 
     print('job settings: ',settings)
 
@@ -43,17 +54,36 @@ def write_script(settings):
     # execute the job
     #
     os.system('chmod +x '+scriptfile)
-    os.system('qsub '+scriptfile)
+    log_dir = run_dir +'/logs'
+    #
+    # if the logfile directory does not exist.... make it
+    #
+    if not os.path.exists(log_dir):
+        cmd = 'mkdir '+log_dir
+        os.system(cmd)
+
+    os.system('qsub -e '+log_dir+' -o '+log_dir+' '+scriptfile)
 
 #
 # main function
 #
 def main():
 
+    if sys.argv[1] == '--i':
+        job_file = sys.argv[2]
+    else:
+        job_file = 'jobs.xlsx'
+
+    print('generate_jobs:: reading settings from ',job_file)
+    if not os.path.exists(job_file):
+        print('generate_jobs:: ERROR job_file =',job_file,' does not exist')
+        exit(-1)
+
+
     #
     # read xls fiel with job parameters
     #
-    df = pd.read_excel('jobs.xlsx')
+    df = pd.read_excel(job_file)
     #
     # write script file and submit to queue
     #

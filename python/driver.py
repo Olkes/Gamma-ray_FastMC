@@ -19,6 +19,10 @@ def generate_events(nevents, energy, vrt, edep_max, nscatter, random_seed,
     #
     fiducial_volume = None
 
+    #
+    # check if output directory exists
+    #
+
     # make sure the variables are floats and not strings!
     energy = float(energy)
     edep_max=float(edep_max)
