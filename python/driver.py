@@ -1,35 +1,34 @@
 import sys
 
-sys.path.insert(0, "../python/")
+sys.path.insert(0, "python/")
 
 from particle import particle
 from physics import em_physics
 from cylinder import cylinder
 
-import matplotlib.pyplot as plt
 import numpy as np
-from numba import jit
 import pandas as pd
 import datetime
 
-import json
 
-
-def generate_events(nevents, energy, vrt, edep_max, nscatter, random_seed, mode='sim_files', fiducial_volume=None):
+def generate_events(nevents, energy, vrt, edep_max, nscatter, random_seed,
+                    r_cryostat, z_cryostat, r_fiducial, z_fiducial,
+                    mode="sim_files"):
     #
     # define the geometry
     #
-    radius_cryostat = 65  # cm
-    height_cryostat = 150  # cm
+    fiducial_volume = None
+
+    # make sure the variables are floats and not strings!
+    energy = float(energy)
+    edep_max=float(edep_max)
+
+    radius_cryostat = float(r_cryostat)  # cm
+    height_cryostat = float(z_cryostat)
     cryostat = cylinder(R=radius_cryostat, h=height_cryostat)
 
-    if fiducial_volume == 'large':
-        radius_fiducial = 64  # cm
-        height_fiducial = 149  # cm
-    else:
-        radius_fiducial = 57  # cm
-        height_fiducial = 134  # cm
-
+    radius_fiducial = float(r_fiducial)  # cm
+    height_fiducial = float(z_fiducial)  # cm
     fiducial = cylinder(R=radius_fiducial, h=height_fiducial)
 
     #
@@ -65,7 +64,7 @@ def generate_events(nevents, energy, vrt, edep_max, nscatter, random_seed, mode=
     writeout = 4
     # Open and clear file files
     tarr = []
-    open('/data/xenon/olivier/Gamma-ray FastMC/mcdata' + str(filename) + '.' + 'csv', 'w+').close()
+    open('/data/xenon/acolijn/mcdata' + str(filename) + '.' + 'csv', 'w+').close()
 
     # Event generation loop
     for ieve in range(nevents):
@@ -107,7 +106,7 @@ def generate_events(nevents, energy, vrt, edep_max, nscatter, random_seed, mode=
         if ieve % 10 == 0:
             df = pd.DataFrame(tarr)
 
-            df.to_csv('/data/xenon/olivier/Gamma-ray FastMC/mcdata/' + str(filename) + '.' + 'csv', mode='a', index=False,
+            df.to_csv('/data/xenon/acolijn/mcdata/' + str(filename) + '.' + 'csv', mode='a', index=False,
                       header=False)
             # Write the data to a file in chunks (size is a parameter)
             tarr = []
@@ -115,7 +114,7 @@ def generate_events(nevents, energy, vrt, edep_max, nscatter, random_seed, mode=
             # delete total array and data-frame
 
     # make not in sim log book
-    f = open('/data/xenon/olivier/Gamma-ray FastMC/mcdata/sim_log.csv', 'a+')
+    f = open('/data/xenon/acolijn/mcdata/sim_log.csv', 'a+')
 
     dandt = datetime.datetime.now()
     day = dandt.strftime("%d/%m/%Y")
