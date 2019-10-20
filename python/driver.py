@@ -13,7 +13,7 @@ import datetime
 
 def generate_events(nevents, energy, vrt, edep_max, nscatter, random_seed,
                     r_cryostat, z_cryostat, r_fiducial, z_fiducial,
-                    mode="sim_files"):
+                    output,mode="sim_files"):
     #
     # define the geometry
     #
@@ -42,29 +42,16 @@ def generate_events(nevents, energy, vrt, edep_max, nscatter, random_seed,
     np.random.seed(random_seed)
     #
     # set location and file name
-    if mode == 'ref':  # referance files in a separate folder
-        location = '/' + str(energy) + '/ref_files/'
-        if fiducial_volume == 'large':  # files with a big fiducial volume in a separate folder
-            location = '/' + str(energy) + '/ref_files/large_fiducial_volume/'
-
-    elif mode == 'sim_files':  # Simulation files (not ref)
-        if vrt == 'fiducial_scatter':  # plain vrt files
-            location = '/' + str(energy) + '/vrt/'
-            if edep_max < energy:  # vrt files with energy cut
-                location = '/' + str(energy) + '/vrt/250kev_ecut/'
-        else:  # non vrt files
-            location = '/' + str(energy) + '/non_vrt/'
-
-    else:
-        print('ERROR wrong mode')
-
-    filename = str(location) + 'simdata_n=' + str(nevents)
+    #
+    filename = str(output) + '.csv'
+    logfile = str(output) + '.logfile.csv'
     #
     # set write out (how many scatters are written in output file
+    #
     writeout = 4
     # Open and clear file files
     tarr = []
-    open('/data/xenon/acolijn/mcdata' + str(filename) + '.' + 'csv', 'w+').close()
+    open(filename, 'w+').close()
 
     # Event generation loop
     for ieve in range(nevents):
@@ -106,15 +93,16 @@ def generate_events(nevents, energy, vrt, edep_max, nscatter, random_seed,
         if ieve % 10 == 0:
             df = pd.DataFrame(tarr)
 
-            df.to_csv('/data/xenon/acolijn/mcdata/' + str(filename) + '.' + 'csv', mode='a', index=False,
-                      header=False)
+            df.to_csv(filename, mode='a', index=False,header=False)
             # Write the data to a file in chunks (size is a parameter)
             tarr = []
             del (df)
             # delete total array and data-frame
 
-    # make not in sim log book
-    f = open('/data/xenon/acolijn/mcdata/sim_log.csv', 'a+')
+    #
+    # make a logfile with each run
+    #
+    f = open(logfile, 'w')
 
     dandt = datetime.datetime.now()
     day = dandt.strftime("%d/%m/%Y")

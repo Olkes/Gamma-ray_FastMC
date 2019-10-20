@@ -22,11 +22,12 @@ def main(argv):
     parser.add_argument('--z_cryostat')
     parser.add_argument('--r_fiducial')
     parser.add_argument('--z_fiducial')
+    parser.add_argument('--output')
 
-    
+
     args = parser.parse_args()
 
-    ###print(args)
+    print(args)
 
     #
     # execute simulation
@@ -41,6 +42,7 @@ def main(argv):
                     z_cryostat=float(args.z_cryostat),
                     r_fiducial=float(args.r_fiducial),
                     z_fiducial=float(args.z_fiducial),
+                    output=args.output,
                     mode="sim_files"
                     )
 
