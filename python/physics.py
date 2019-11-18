@@ -271,7 +271,7 @@ class em_physics:
         #
         # random angle in phi between 0 and 2pi
         #
-        phi = 2 * np.pi * np.random.uniform(0.1)
+        phi = 2 * np.pi * np.random.uniform(0,1)
 
         return theta, phi, weight
 
